@@ -5,6 +5,7 @@
   --text-dark: #333;
   --primary: #e03131;
   --primary-dark: #c92a2a;
+  --background-grey: #eee;
 }
 
 *,
@@ -46,7 +47,7 @@ body {
   align-items: center;
   background-color: var(--background);
 
-  height: 9.6rem;
+  height: min(9.6rem, 18vh);
   padding: 0 4.8rem;
 }
 
@@ -111,6 +112,8 @@ body {
 .main {
   display: grid;
   grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1.2rem auto;
+  height: min(88vh);
 }
 
 .main::before {
@@ -123,13 +126,43 @@ body {
   height: 1.2rem;
 }
 
-.nav-left {
-  background-color: #c92a2a;
-  height: auto;
+.left-nav {
+  background-color: var(--background-grey);
+  min-width: 25rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.left-nav-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  list-style: none;
+}
+
+.left-nav-list li {
+  padding: 2rem 0;
+  width: 100%;
+  margin: 0 auto 0 2rem;
+}
+
+.left-nav-link:link,
+.left-nav-link:visited {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-size: 1.6rem;
+  font-weight: 400;
   width: 100%;
 }
 
+.left-nav-link:hover,
+.left-nav-link:active {
+  color: var(--primary-dark);
+  font-weight: 500;
+}
+
 .gallery {
-  background-color: #555555;
   width: 100%;
 }

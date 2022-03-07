@@ -19,10 +19,11 @@
     "@parcel/transformer-sass": "^2.3.2",
     "parcel": "^2.3.2",
     "parcel-plugin-watch-reload": "^1.0.3",
-    "sass": "^1.49.9"
+    "sass": "^1.49.9",
+    "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@reactivex/rxjs": "^6.6.7"
+    "axios": "^0.26.0"
   },
   "watchreload": {
     "files": "dist/**",
