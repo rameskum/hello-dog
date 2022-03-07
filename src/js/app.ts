@@ -2,6 +2,9 @@ import axios from "axios";
 
 let dogBreedResponse: { message };
 let dogBreedList: { name: string, value: string }[] = [];
+let dogImages: string[] = [];
+const header = document.querySelector('.page-heading');
+const gridContainer = document.querySelector('.grid-container');
 
 function fetchBreedList() {
     axios({
@@ -35,7 +38,7 @@ function fetchBreedList() {
                 link.className = 'left-nav-link';
                 link.innerText = breed.name;
                 link.href = `#bred-nav=${breed.value}`;
-                link.addEventListener('click', route);
+                link.addEventListener('click', () => fetchBreed(breed.value));
                 li.appendChild(link);
                 ulList.appendChild(li);
             });
@@ -46,7 +49,65 @@ function fetchBreedList() {
 }
 
 function fetchBreed(dogBreed: string) {
-    console.log(dogBreed);
+    header.textContent = `Random Images - ${dogBreed.toUpperCase()}`
+    axios({
+        method: 'get',
+        url: `https://dog.ceo/api/breed/${dogBreed}/images/random/10`,
+        responseType: 'json'
+    })
+        .then(res => {
+            dogImages = [];
+            dogImages = res.data?.message;
+        })
+        .then(loadMainContent)
+        .catch(err => {
+            console.log(err);
+        })
+}
+
+function createImageCard(imgUrl: string, caption?: string) {
+    const imgDiv = document.createElement('div');
+    const imgTag = document.createElement('img');
+    imgDiv.appendChild(imgTag);
+
+    imgTag.className = 'grid-item';
+    imgTag.src = imgUrl;
+
+    if (caption) {
+        imgTag.alt = caption;
+        const pTag = document.createElement('p');
+        pTag.innerText = caption;
+        imgDiv.appendChild(pTag);
+    }
+
+    return imgDiv;
+}
+
+function loadMainContent() {
+    gridContainer.innerHTML = '';
+    for (let i = 0; i < dogImages.length; i++) {
+        let card = createImageCard(dogImages[i], 'hello');
+        gridContainer.appendChild(card);
+    }
+}
+
+function loadRandom() {
+    console.log('loading random dog images');
+    header.textContent = 'Random Dog Image';
+
+    axios({
+        method: 'get',
+        url: 'https://dog.ceo/api/breeds/image/random/10',
+        responseType: 'json'
+    })
+        .then(res => {
+            dogImages = [];
+            dogImages = res.data?.message;
+        })
+        .then(loadMainContent)
+        .catch(err => {
+            console.log(err);
+        })
 }
 
 function route() {
@@ -55,6 +116,12 @@ function route() {
 
     switch (key) {
         case '#bred-nav':
+            fetchBreed(value);
+            break;
+        default:
+            console.log('route not defined!', 'loading random');
+            loadRandom();
+            break;
     }
 }
 
