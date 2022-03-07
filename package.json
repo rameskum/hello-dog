@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "random dog images based on breed",
   "scripts": {
-    "dev": "parcel src/index.html",
+    "dev": "parcel src/*.html",
     "build": "parcel build src/index.html --public-url ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rameskum/hello-dog.git"
   },
   "keywords": [
     "dog"
@@ -13,17 +17,15 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.3.2",
-    "autoprefixer": "^10.4.2",
     "parcel": "^2.3.2",
     "parcel-plugin-watch-reload": "^1.0.3",
-    "postcss": "^8.4.7",
     "sass": "^1.49.9"
+  },
+  "dependencies": {
+    "@reactivex/rxjs": "^6.6.7"
   },
   "watchreload": {
     "files": "dist/**",
     "reloadDelay": 200
-  },
-  "dependencies": {
-    "@reactivex/rxjs": "^6.6.7"
   }
 }
