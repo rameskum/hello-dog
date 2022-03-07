@@ -2,9 +2,26 @@ import axios from "axios";
 
 let dogBreedResponse: { message };
 let dogBreedList: { name: string, value: string }[] = [];
+let filteredDogBreedList: { name: string, value: string }[] = [];
 let dogImages: string[] = [];
 const header = document.querySelector('.page-heading');
 const gridContainer = document.querySelector('.grid-container');
+const searchBox = document.querySelector('.search');
+
+function crateBreedList() {
+    let ulList = document.querySelector('.left-nav-list');
+    ulList.innerHTML = '';
+    filteredDogBreedList.forEach(breed => {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.className = 'left-nav-link';
+        link.innerText = breed.name;
+        link.href = `#bred-nav=${breed.value}`;
+        link.addEventListener('click', () => fetchBreed(breed.value));
+        li.appendChild(link);
+        ulList.appendChild(li);
+    });
+}
 
 function fetchBreedList() {
     axios({
@@ -29,20 +46,9 @@ function fetchBreedList() {
                     }
                 }
             }
+            filteredDogBreedList = dogBreedList;
         })
-        .then(() => {
-            let ulList = document.querySelector('.left-nav-list');
-            dogBreedList.forEach(breed => {
-                const li = document.createElement('li');
-                const link = document.createElement('a');
-                link.className = 'left-nav-link';
-                link.innerText = breed.name;
-                link.href = `#bred-nav=${breed.value}`;
-                link.addEventListener('click', () => fetchBreed(breed.value));
-                li.appendChild(link);
-                ulList.appendChild(li);
-            });
-        })
+        .then(() => crateBreedList())
         .catch(err => {
             console.log(err);
         })
@@ -129,5 +135,24 @@ function route() {
     }
 }
 
+function search(e) {
+    const searchStr = e.target.value;
+    console.log(searchStr)
+    if (searchStr) {
+        filteredDogBreedList = [];
+        for (const breedEl of dogBreedList) {
+            if (breedEl.name.match(searchStr)) {
+                console.log('match')
+                filteredDogBreedList.push(breedEl);
+            }
+        }
+    } else {
+        filteredDogBreedList = dogBreedList;
+    }
+    crateBreedList();
+}
+
 fetchBreedList();
 route();
+
+searchBox.addEventListener('input', e => search(e));
