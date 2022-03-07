@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,600;1,700&display=swap');
+
+:root {
+  --text-default: #555;
+  --text-dark: #333;
+  --primary: #e03131;
+  --primary-dark: #c92a2a;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--text-default);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+}
+
+/**************************************/
+/* GENERAL REUSABLE COMPONENTS */
+/**************************************/
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 3.2rem;
+}
+
+/**************************************/
+/* HEADER */
+/**************************************/
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--background);
+
+  height: 9.6rem;
+  padding: 0 4.8rem;
+}
+
+.logo {
+  height: 3rem;
+  transform: scale(3);
+}
+
+.logo path {
+  stroke: var(--primary);
+}
+
+.logo #eye-left,
+.logo #eye-right {
+  fill: var(--primary);
+}
+
+/**************************************/
+/* NAVIGATION */
+/**************************************/
+
+.main-nav-list {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 3.2rem;
+}
+
+.main-nav-link:link,
+.main-nav-link:visited {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 1.8rem;
+  transition: all 0.3s;
+}
+
+.main-nav-link:hover,
+.main-nav-link:active {
+  color: var(--primary-dark);
+}
+
+.main-nav-link.nav-cta:link,
+.main-nav-link.nav-cta:visited {
+  padding: 1.2rem 2.4rem;
+  border-radius: 9px;
+  color: var(--white);
+  background-color: var(--primary);
+}
+
+.main-nav-link.nav-cta:hover,
+.main-nav-link.nav-cta:active {
+  background-color: var(--primary-dark);
+}
+
+
+/**************************************/
+/* MAIN */
+/**************************************/
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.main::before {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: -1;
+  background-image: linear-gradient(to right, var(--primary), var(--text-dark));
+  height: 1.2rem;
+}
+
+.nav-left {
+  background-color: #c92a2a;
+  height: auto;
+  width: 100%;
+}
+
+.gallery {
+  background-color: #555555;
+  width: 100%;
+}
