@@ -17,6 +17,7 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.3.2",
+    "@parcel/transformer-typescript-tsc": "^2.3.2",
     "parcel": "^2.3.2",
     "parcel-plugin-watch-reload": "^1.0.3",
     "sass": "^1.49.9",
