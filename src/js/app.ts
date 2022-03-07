@@ -86,7 +86,11 @@ function createImageCard(imgUrl: string, caption?: string) {
 function loadMainContent() {
     gridContainer.innerHTML = '';
     for (let i = 0; i < dogImages.length; i++) {
-        let card = createImageCard(dogImages[i], 'hello');
+        let resolvedBreed = dogImages[i]
+            .substring(dogImages[i].indexOf('/breeds/'))
+            .replace('/breeds/', '');
+        resolvedBreed = resolvedBreed.substring(0, resolvedBreed.lastIndexOf('/'));
+        let card = createImageCard(dogImages[i], resolvedBreed);
         gridContainer.appendChild(card);
     }
 }
