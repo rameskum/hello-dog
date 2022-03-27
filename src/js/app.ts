@@ -1,4 +1,5 @@
 import axios from "axios";
+import Toastify from 'toastify-js'
 
 let dogBreedResponse: { message };
 let dogBreedList: { name: string, value: string }[] = [];
@@ -152,7 +153,44 @@ function search(e) {
     crateBreedList();
 }
 
+function funFacts() {
+    let facts: string[] = [];
+    let errorCounter = 0;
+    let interval = setInterval(() => {
+        if (facts.length == 0) {
+            if (errorCounter == 5) {
+                console.log("multiple errors! giving up.")
+                clearInterval(interval);
+                return;
+            }
+            axios.get('https://dog-fact.herokuapp.com/api/v1/facts/dog?count=15')
+                .then(res => {
+                    console.log(res.data);
+                    facts = res.data.facts || [];
+                })
+                .then(() => {
+                    console.log(facts)
+                })
+                .catch(() => {
+                    errorCounter++;
+                    console.log('error while getting dogs facts');
+                });
+        }
+        // display toast
+        let fact = facts.shift();
+        fact && Toastify({
+            text: fact,
+            duration: 15000,
+            close: false,
+            gravity: "bottom", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+        }).showToast();
+    }, 5000);
+}
+
 fetchBreedList();
 route();
+funFacts();
 
 searchBox.addEventListener('input', e => search(e));

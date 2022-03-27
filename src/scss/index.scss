@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,600;1,700&display=swap');
+@import "../../node_modules/toastify-js/src/toastify.css";
+
 
 :root {
   --text-default: #555;
@@ -26,6 +28,14 @@ html {
 body {
   font-family: 'Poppins', sans-serif;
   height: 100vh;
+}
+
+// TOAST
+.toastify {
+  font-size: 1.2rem;
+  max-width: 30rem;
+  background: -webkit-linear-gradient(315deg, var(--primary), var(--text-default));
+  background: linear-gradient(135deg, var(--primary), var(--text-default));
 }
 
 /**************************************/
