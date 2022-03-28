@@ -8,6 +8,8 @@ let dogImages: string[] = [];
 const header = document.querySelector('.page-heading');
 const gridContainer = document.querySelector('.grid-container');
 const searchBox = document.querySelector('.search');
+const loader = document.querySelector('.loader');
+const main_content = document.querySelector('.main');
 
 function crateBreedList() {
     let ulList = document.querySelector('.left-nav-list');
@@ -50,6 +52,10 @@ function fetchBreedList() {
             filteredDogBreedList = dogBreedList;
         })
         .then(() => crateBreedList())
+        .then(() => {
+            loader.remove();
+            main_content.classList.remove('hidden');
+        })
         .catch(err => {
             console.log(err);
         })
