@@ -6,7 +6,7 @@ This application is build with `javascript`, `css` and `html` only.
 
 ## Sample Image
 
-![application-demo](src/res/app.png)
+![application-demo](src/res/hello-dog.png)
 
 ## API
 
