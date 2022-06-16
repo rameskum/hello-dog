@@ -11,6 +11,9 @@ const searchBox = document.querySelector('.search');
 const loader = document.querySelector('.loader');
 const main_content = document.querySelector('.main');
 
+let noResultText = document.createElement('h2');
+noResultText.textContent = 'No Result';
+
 function crateBreedList() {
     let ulList = document.querySelector('.left-nav-list');
     ulList.innerHTML = '';
@@ -65,17 +68,18 @@ function fetchBreed(dogBreed: string) {
     header.textContent = `Random Images - ${dogBreed.toUpperCase()}`
     axios({
         method: 'get',
-        url: `https://dog.ceo/api/breed/${dogBreed}/images/random/10`,
+        url: `https://dog.ceo/api/breed/${dogBreed}/images/random/15`,
         responseType: 'json'
     })
         .then(res => {
             dogImages = [];
             dogImages = res.data?.message;
         })
-        .then(loadMainContent)
         .catch(err => {
             console.log(err);
+            dogImages = [];
         })
+        .then(loadMainContent);
 }
 
 function createImageCard(imgUrl: string, caption?: string) {
@@ -98,6 +102,10 @@ function createImageCard(imgUrl: string, caption?: string) {
 
 function loadMainContent() {
     gridContainer.innerHTML = '';
+    if (dogImages.length == 0) {
+        gridContainer.appendChild(noResultText);
+        return;
+    }
     for (let i = 0; i < dogImages.length; i++) {
         let resolvedBreed = dogImages[i]
             .substring(dogImages[i].indexOf('/breeds/'))
@@ -133,6 +141,12 @@ function route() {
 
     switch (key) {
         case '#bred-nav':
+            console.log('breed-name => ' + value);
+            if (!value) {
+                console.error('breed value not set!');
+                loadRandom();
+                break;
+            }
             fetchBreed(value);
             break;
         default:
@@ -171,11 +185,9 @@ function funFacts() {
             }
             axios.get('https://dog-fact.herokuapp.com/api/v1/facts/dog?count=15')
                 .then(res => {
-                    console.log(res.data);
                     facts = res.data.facts || [];
                 })
                 .then(() => {
-                    console.log(facts)
                 })
                 .catch(() => {
                     errorCounter++;
